@@ -1,6 +1,4 @@
-"use client";
-
-import { useState, useCallback } from 'react';
+import { useState, useCallback, useMemo } from 'react';
 
 const GRID_SIZE = 3;
 const EMPTY_INDEX = GRID_SIZE * GRID_SIZE - 1;
@@ -41,19 +39,26 @@ const isPuzzleSolved = (puzzle: PuzzleState): boolean => {
 export const useSlidePuzzle = () => {
   const [puzzle, setPuzzle] = useState<PuzzleState>(shufflePuzzle());
 
-  const movePiece = useCallback((index: number) => {
+  const movablePieces = useMemo(() => {
     const emptyIndex = puzzle.indexOf(EMPTY_INDEX);
-    if (
-      (Math.abs(index - emptyIndex) === 1 && Math.floor(index / GRID_SIZE) === Math.floor(emptyIndex / GRID_SIZE)) ||
-      Math.abs(index - emptyIndex) === GRID_SIZE
-    ) {
+    return [
+      emptyIndex - GRID_SIZE,
+      emptyIndex + GRID_SIZE,
+      emptyIndex % GRID_SIZE !== 0 ? emptyIndex - 1 : -1,
+      emptyIndex % GRID_SIZE !== GRID_SIZE - 1 ? emptyIndex + 1 : -1,
+    ].filter(index => index >= 0 && index < GRID_SIZE * GRID_SIZE);
+  }, [puzzle]);
+
+  const movePiece = useCallback((index: number) => {
+    if (movablePieces.includes(index)) {
+      const emptyIndex = puzzle.indexOf(EMPTY_INDEX);
       setPuzzle(prev => {
         const newPuzzle = [...prev];
         [newPuzzle[index], newPuzzle[emptyIndex]] = [newPuzzle[emptyIndex], newPuzzle[index]];
         return newPuzzle;
       });
     }
-  }, [puzzle]);
+  }, [puzzle, movablePieces]);
 
   const shuffleBoard = useCallback(() => {
     setPuzzle(shufflePuzzle());
@@ -61,6 +66,6 @@ export const useSlidePuzzle = () => {
 
   const isSolved = isPuzzleSolved(puzzle);
 
-  return { puzzle, movePiece, shuffleBoard, isSolved };
+  return { puzzle, movePiece, shuffleBoard, isSolved, movablePieces };
 };
 

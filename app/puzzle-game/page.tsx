@@ -5,14 +5,20 @@ import { useSlidePuzzle } from './hooks/useSlidePuzzle';
 import { PuzzlePiece } from './components/PuzzlePiece';
 
 const SlidePuzzle: React.FC = () => {
-  const { puzzle, movePiece, shuffleBoard, isSolved } = useSlidePuzzle();
+  const { puzzle, movePiece, shuffleBoard, isSolved, movablePieces } = useSlidePuzzle();
 
   return (
-    <div className="flex flex-col items-center justify-center min-h-screen bg-gray-100 p-4">
+    <div className="flex flex-col items-center justify-center min-h-screen bg-gradient-to-br from-purple-100 to-pink-100 p-4">
       <h1 className="text-3xl font-bold mb-6">おばけスライドパズル</h1>
-      <div className="grid grid-cols-3 gap-2 bg-gray-300 p-2 rounded-lg shadow-lg">
+      <div className="grid grid-cols-3 gap-2 bg-white p-3 rounded-xl shadow-2xl">
         {puzzle.map((value, index) => (
-          <PuzzlePiece key={index} value={value} index={index} onClick={movePiece} />
+          <PuzzlePiece
+            key={index}
+            value={value}
+            index={index}
+            onClick={movePiece}
+            isMovable={movablePieces.includes(index)}
+          />
         ))}
       </div>
       <button
