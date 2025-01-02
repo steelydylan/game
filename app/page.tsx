@@ -8,6 +8,7 @@ const games = [
   { name: '妖怪マッチングゲーム', path: '/matching-game', color: 'from-purple-400 to-blue-500' },
   { name: '妖怪メモリーゲーム', path: '/memory-game', color: 'from-pink-400 to-red-500' },
   { name: '妖怪パズルゲーム', path: '/puzzle-game', color: 'from-yellow-400 to-green-500' },
+  { name: '妖怪タッチゲーム', path: '/hit-game', color: 'from-blue-400 to-indigo-500' },
 ]
 
 export default function GameSelection() {
