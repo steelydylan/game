@@ -24,6 +24,7 @@ export default function DropZone({ type, imagePath, color, onDrop, isMatched }: 
 
   return (
     <motion.div
+      // @ts-expect-error
       ref={drop}
       initial={{ scale: 1 }}
       animate={{ scale: isOver ? 1.1 : 1 }}

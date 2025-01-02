@@ -43,6 +43,7 @@ export default function Yokai({ id, type, imagePath, color, isMatched }: YokaiPr
   return (
     <motion.div
       ref={(node) => {
+        // @ts-expect-error
         ref.current = node
         drag(node)
       }}
