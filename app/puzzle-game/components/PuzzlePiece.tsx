@@ -1,5 +1,4 @@
 import React from 'react';
-import Image from 'next/image';
 
 interface PuzzlePieceProps {
   value: number;
@@ -19,7 +18,7 @@ export const PuzzlePiece: React.FC<PuzzlePieceProps> = ({ value, index, onClick 
       className="w-full h-full bg-white rounded-md shadow-md hover:shadow-lg transition-shadow duration-200 overflow-hidden"
       onClick={() => onClick(index)}
     >
-      <Image
+      <img
         src={imageUrl}
         alt={`Puzzle piece ${value + 1}`}
         width={100}
